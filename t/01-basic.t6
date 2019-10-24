@@ -1,0 +1,29 @@
+use Test;
+
+use JSON::Pretty::Sorted;
+
+my %data = :c(1), :a(3), :b(2);
+
+ok no-ws( to-json( %data, sorter => { $^a.key   cmp $^b.key }   ) ) eq '{"a":3,"b":2,"c":1}', "simple stringy";
+ok no-ws( to-json( %data, sorter => { $^b.value cmp $^a.value } ) ) eq '{"a":3,"b":2,"c":1}', "simple numeric";
+
+%data = foo => [ 1, 2, 3 ], bar => [5, 6, 4], baz => [ 3.1, 8.1, 1.1 ];
+
+ok no-ws( to-json( %data,
+    sorter => {
+            $^a.isa( Pair ) ?? $^a.key cmp $^b.key !!
+            $^a.isa( Int )  ?? $^b <=> $^a         !!
+            Same;
+    })) eq '{"bar":[6,5,4],"baz":[3.1,8.1,1.1],"foo":[3,2,1]}',
+    "complex"
+;
+
+multi sub sorter( Pair $a, Pair $b ) { $a.key cmp $b.key }
+multi sub sorter( Int $a, Int $b )   { $b <=> $a }
+multi sub sorter( $a, $b )           { Same }
+
+ok no-ws( to-json( %data, :&sorter ) ) eq '{"bar":[6,5,4],"baz":[3.1,8.1,1.1],"foo":[3,2,1]}', "multi sorter";
+
+sub no-ws( $v ) { $v.subst( /\s/, '', :g ) }
+
+done-testing;

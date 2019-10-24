@@ -1,0 +1,5 @@
+.precomp/
+.mi6.json
+*.iml
+.idea
+.travis.yml

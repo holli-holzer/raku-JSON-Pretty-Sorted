@@ -1,0 +1,21 @@
+{
+  "name": "JSON::Pretty::Sorted",
+  "description": "",
+  "version": "0.0.1",
+  "perl": "6.d",
+  "authors": [
+    "holli-holzer (holli.holzer@gmail.com)"
+  ],
+  "auth": "github:holli-holzer",
+  "depends": [],
+  "build-depends": [],
+  "test-depends": [],
+  "provides": {
+     "JSON::Pretty::Sorted": "lib\\JSON\\Pretty\\Sorted.pm6"
+  },
+  "resources": [],
+  "license": "GPL-3.0",
+  "tags": [],
+  "api": 1,
+  "source-url": ""
+}
