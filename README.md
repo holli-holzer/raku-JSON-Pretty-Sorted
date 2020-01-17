@@ -1,35 +1,57 @@
-[![Build Status](https://travis-ci.org/holli-holzer/https://github.com/holli-holzer/my-old-mi6.svg?branch=master)](https://travis-ci.org/holli-holzer/https://github.com/holli-holzer/my-old-mi6)
+[![Build Status](https://travis-ci.org/holli-holzer/raku-JSON-Pretty-Sorted.svg?branch=master)](https://travis-ci.org/holli-holzer/raku-JSON-Pretty-Sorted)
 
-use v6.c;
-unit class JSON::Pretty::Sorted:ver<0.0.1>:auth<holli-holzer(holli.holzer@gmail.com>;
+NAME
+====
 
-=begin pod
+JSON::Pretty::Sorted - JSON::Pretty, but with the ability to sort keys and data
 
-=head1 NAME
+SYNOPSIS
+========
 
-JSON::Pretty::Sorted - blah blah blah
+```perl6
+    use JSON::Pretty::Sorted;
 
-=head1 SYNOPSIS
+    # For brevity
+    sub no-ws( $v ) { $v.subst( /\s/, '', :g ) }
 
-=begin code :lang<perl6>
+    my %data = :c(1), :a(3), :b(2);
 
-use JSON::Pretty::Sorted;
+    # sort by key, '{"a":3,"b":2,"c":1}'
+    say no-ws to-json %data, sorter => { $^a.key cmp $^b.key };
 
-=end code
+    # sort by value, '{"a":3,"b":2,"c":1}'
+    say no-ws to-json %data, sorter => { $^b.value cmp $^a.value }
 
-=head1 DESCRIPTION
+    my %data = foo => [ 1, 2, 3 ], bar => [5, 6, 4], baz => [ 3.1, 8.1, 1.1 ];
 
-JSON::Pretty::Sorted is ...
+    # '{"bar":[6,5,4],"baz":[3.1,8.1,1.1],"foo":[3,2,1]}'
+    say no-ws to-json %data,
+        sorter => {
+                $^a.isa( Pair ) ?? $^a.key cmp $^b.key !!
+                $^a.isa( Int )  ?? $^b <=> $^a         !!
+                Same;
+        };
 
-=head1 AUTHOR
+    # Same as above
+    multi sub sorter( Pair $a, Pair $b ) { $a.key cmp $b.key }
+    multi sub sorter( Int $a, Int $b )   { $b <=> $a }
+    multi sub sorter( $a, $b )           { Same }
+
+    say no-ws to-json( %data, :&sorter );
+```
+
+DESCRIPTION
+===========
+
+JSON::Pretty::Sorted is the same as [JSON::Pretty](https://github.com/FROGGS/p6-JSON-Pretty), but with the ability to sort the JSON output.
+
+AUTHOR
+======
 
 holli-holzer (holli.holzer@gmail.com)
 
-=head1 COPYRIGHT AND LICENSE
+COPYRIGHT AND LICENSE
+=====================
 
-Copyright 2019 holli-holzer
-
-This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
-
-=end pod
+This library is free software; you can redistribute it and/or modify it under the GPL-3 License.
 

@@ -1,6 +1,6 @@
 use v6.c;
 
-unit module JSON::Pretty::Sorted:ver<0.0.1>:auth<holli-holzer(holli.holzer@gmail.com>;
+unit module JSON::Pretty::Sorted:ver<0.0.2>:auth<Markus Holzer (holli.holzer@gmail.com)>;
 
 proto to-json($, :$indent = 0, :$first = 0, :&sorter = {0} ) is export {*}
 
@@ -88,8 +88,6 @@ holli-holzer (holli.holzer@gmail.com)
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2019 holli-holzer
-
-This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
+This library is free software; you can redistribute it and/or modify it under the GPL-3 License.
 
 =end pod

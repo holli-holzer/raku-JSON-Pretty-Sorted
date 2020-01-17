@@ -7,7 +7,7 @@ my %data = :c(1), :a(3), :b(2);
 ok no-ws( to-json( %data, sorter => { $^a.key   cmp $^b.key }   ) ) eq '{"a":3,"b":2,"c":1}', "simple stringy";
 ok no-ws( to-json( %data, sorter => { $^b.value cmp $^a.value } ) ) eq '{"a":3,"b":2,"c":1}', "simple numeric";
 
-%data = foo => [ 1, 2, 3 ], bar => [5, 6, 4], baz => [ 3.1, 8.1, 1.1 ];
+%data = foo => [ 1, 2, 3 ], baz => [ 3.1, 8.1, 1.1 ], bar => [5, 6, 4] ;
 
 ok no-ws( to-json( %data,
     sorter => {
