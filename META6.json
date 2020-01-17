@@ -1,7 +1,7 @@
 {
   "name" : "JSON::Pretty::Sorted",
   "description" : "JSON::Pretty, but with the ability to sort keys and data",
-  "version" : "0.0.1",
+  "version" : "0.0.2",
   "perl" : "6.d",
   "authors" : [
     "Markus Holzer (holli.holzer@gmail.com)"
